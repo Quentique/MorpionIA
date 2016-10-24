@@ -31,6 +31,7 @@ Game::Game(RenderWindow& windows) : window(windows), turn(CROSS)
 }
 
 void Game::drawQuad() {
+
     RectangleShape quad[5];
     for (int i = 0 ; i < 3 ; i ++) {
         quad[i].setSize(Vector2f(610, 5));
@@ -38,6 +39,7 @@ void Game::drawQuad() {
     for (int j = 3 ; j < 5 ; j++) {
         quad[j].setSize(Vector2f(5, 615));
     }
+
     quad[0].setPosition(0, 510);
     quad[1].setPosition(0, 310);
     quad[2].setPosition(0, 110);
