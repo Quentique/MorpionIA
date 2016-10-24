@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "game.hpp"
 
 using namespace std;
 using namespace sf;
@@ -11,6 +12,9 @@ int main() {
 
 RenderWindow window(VideoMode(610, 715, 32), "Morpion");
 window.setFramerateLimit(30);
+
+Game game(window);
+
 while (window.isOpen()) {
 
     Event event;
