@@ -18,7 +18,7 @@ Game::Game(RenderWindow& windows) : window(windows), turn(CROSS)
         cout << "FATAL ERROR" << endl;
 
     crossI.createMaskFromColor(Color::Black);
-    noughtI.createMaskFromColor(Color::Black);
+    noughtI.createMaskFromColor(Color::Red);
 
     cross = new Texture();
     nought = new Texture();
@@ -59,7 +59,6 @@ void Game::drawQuad() {
     }
     // TEST
     sprite_quad[0][0].setTexture(*cross);
-    sprite_quad[0][0].setColor(Color::Red);
     sprite_quad[0][2].setTexture(*nought);
     window.draw(sprite_quad[0][0]);
     window.draw(sprite_quad[0][2]);
