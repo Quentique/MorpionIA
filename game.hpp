@@ -13,6 +13,7 @@ public:
 
     void drawQuad();
     void drawPlay();
+    bool won();
 
 private:
     sf::RenderWindow& window;

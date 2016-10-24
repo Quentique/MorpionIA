@@ -29,8 +29,10 @@ Game::Game(RenderWindow& windows) : window(windows), turn(CROSS)
     cross->setSmooth(true);
     nought->setSmooth(true);
 
-   // quad[2][1] = CROSS;
-    //quad[2][2] = NOUGHT;
+    quad[2][1] = CROSS;
+    quad[2][2] = NOUGHT;
+
+    cout << won() << endl;
 }
 
 void Game::drawQuad() {
@@ -64,15 +66,52 @@ void Game::drawQuad() {
 
 void Game::drawPlay() {
 
-for (int i = 0 ; i<3;i++) {
-    for (int j = 0 ; j<3 ; j++) {
-        if (quad[i][j] == CROSS) {
-            sprite_quad[i][j].setTexture(*cross);
-        } else if (quad[i][j] == NOUGHT) {
-            sprite_quad[i][j].setTexture(*nought);
+    for (int i = 0 ; i<3;i++) {
+        for (int j = 0 ; j<3 ; j++) {
+            if (quad[i][j] == CROSS) {
+                sprite_quad[i][j].setTexture(*cross);
+            } else if (quad[i][j] == NOUGHT) {
+                sprite_quad[i][j].setTexture(*nought);
+            }
+            window.draw(sprite_quad[i][j]);
         }
-        window.draw(sprite_quad[i][j]);
     }
 }
 
+bool Game::won()
+{
+    for (int i = 0 ; i <3 ; i++) {
+        if (quad[i][0]!=EMPTY) {
+            if ((quad[i][0] == quad[i][1]) && (quad[i][0] == quad[i][2]))
+                                sprite_quad[i][0].setColor(Color::Red);
+                sprite_quad[i][1].setColor(Color::Red);
+                sprite_quad[i][2].setColor(Color::Red);
+                return true;
+        }
+    }
+
+    for (int i = 0 ; i < 3 ; i++) {
+        if(quad[0][i] != EMPTY) {
+             if ((quad[0][i] == quad[1][i]) && (quad[0][i] == quad[2][i]))
+                sprite_quad[0][i].setColor(Color::Red);
+                sprite_quad[1][i].setColor(Color::Red);
+                sprite_quad[2][i].setColor(Color::Red);
+                return true;
+        }
+    }
+
+    if (quad[1][1]!=EMPTY) {
+        if ((quad[0][0]!=EMPTY) && (quad[0][0] == quad[1][1]) && (quad[0][0] == quad[2][2]))
+                sprite_quad[0][0].setColor(Color::Red);
+                sprite_quad[1][1].setColor(Color::Red);
+                sprite_quad[2][2].setColor(Color::Red);
+                return true;
+        if ((quad[2][0] != EMPTY) && (quad[2][0] == quad[1][1]) && (quad[1][1] == quad[0][2]))
+                sprite_quad[0][2].setColor(Color::Red);
+                sprite_quad[1][1].setColor(Color::Red);
+                sprite_quad[2][0].setColor(Color::Red);
+                return true;
+    }
+
+    return false;
 }
