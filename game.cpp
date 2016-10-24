@@ -1,6 +1,7 @@
 #include "game.hpp"
 
 using namespace sf;
+using namespace std;
 
 Game::Game(RenderWindow& windows) : window(windows), turn(CROSS)
 {
@@ -11,6 +12,22 @@ Game::Game(RenderWindow& windows) : window(windows), turn(CROSS)
             quad[i][j] = EMPTY;
         }
     }
+
+
+    if (!crossI.loadFromFile("x.bmp") || !noughtI.loadFromFile("o.bmp"))
+        cout << "FATAL ERROR" << endl;
+
+    crossI.createMaskFromColor(Color::Black);
+    noughtI.createMaskFromColor(Color::Black);
+
+    cross = new Texture();
+    nought = new Texture();
+
+    cross->loadFromImage(crossI, IntRect());
+    nought->loadFromImage(noughtI);
+
+    cross->setSmooth(true);
+    nought->setSmooth(true);
 }
 
 void Game::drawQuad() {
@@ -31,4 +48,17 @@ void Game::drawQuad() {
         quad[i].setFillColor(Color::Black);
         window.draw(quad[i]);
     }
+
+    for (int i = 0 ; i < 3 ; i++){
+        for (int j = 0 ; j < 3 ; j++) {
+            sprite_quad[i][j].setPosition(i*200, 110+j*200);
+            sprite_quad[i][j].setScale(1.3333f, 1.3333f);
+        }
+    }
+    // TEST
+    sprite_quad[0][0].setTexture(*cross);
+    sprite_quad[0][0].setColor(Color::Red);
+    sprite_quad[0][2].setTexture(*nought);
+    window.draw(sprite_quad[0][0]);
+    window.draw(sprite_quad[0][2]);
 }

@@ -9,8 +9,10 @@ using namespace sf;
 void drawQuad(RenderWindow& window);
 
 int main() {
+ContextSettings settings;
+settings.antialiasingLevel = 8;
 
-RenderWindow window(VideoMode(610, 715, 32), "Morpion");
+RenderWindow window(VideoMode(610, 715, 32), "Morpion", Style::Default, settings);
 window.setFramerateLimit(30);
 
 Game game(window);
