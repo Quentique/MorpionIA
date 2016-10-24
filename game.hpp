@@ -9,6 +9,7 @@ class Game {
 public:
     Game(sf::RenderWindow& windows);
     enum Case {CROSS, NOUGHT, EMPTY};
+    void drawQuad();
 
 private:
     sf::RenderWindow& window;
