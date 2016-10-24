@@ -12,6 +12,7 @@ public:
     Game(sf::RenderWindow& windows);
 
     void drawQuad();
+    void drawPlay();
 
 private:
     sf::RenderWindow& window;

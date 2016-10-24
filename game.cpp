@@ -7,7 +7,7 @@ Game::Game(RenderWindow& windows) : window(windows), turn(CROSS)
 {
     for (int i = 0 ; i < 3 ; i++)
     {
-        for (int j = 0 ; i < 3 ; i++)
+        for (int j = 0 ; j < 3 ; j++)
         {
             quad[i][j] = EMPTY;
         }
@@ -23,43 +23,56 @@ Game::Game(RenderWindow& windows) : window(windows), turn(CROSS)
     cross = new Texture();
     nought = new Texture();
 
-    cross->loadFromImage(crossI, IntRect());
+    cross->loadFromImage(crossI);
     nought->loadFromImage(noughtI);
 
     cross->setSmooth(true);
     nought->setSmooth(true);
+
+   // quad[2][1] = CROSS;
+    //quad[2][2] = NOUGHT;
 }
 
 void Game::drawQuad() {
 
-    RectangleShape quad[5];
+    RectangleShape quadd[5];
     for (int i = 0 ; i < 3 ; i ++) {
-        quad[i].setSize(Vector2f(610, 5));
+        quadd[i].setSize(Vector2f(610, 5));
     }
     for (int j = 3 ; j < 5 ; j++) {
-        quad[j].setSize(Vector2f(5, 615));
+        quadd[j].setSize(Vector2f(5, 615));
     }
 
-    quad[0].setPosition(0, 510);
-    quad[1].setPosition(0, 310);
-    quad[2].setPosition(0, 110);
-    quad[3].setPosition(200, 110);
-    quad[4].setPosition(405, 110);
+    quadd[0].setPosition(0, 510);
+    quadd[1].setPosition(0, 310);
+    quadd[2].setPosition(0, 110);
+    quadd[3].setPosition(200, 110);
+    quadd[4].setPosition(405, 110);
 
     for (int i = 0 ; i <= 4 ; i++) {
-        quad[i].setFillColor(Color::Black);
-        window.draw(quad[i]);
+        quadd[i].setFillColor(Color::Black);
+        window.draw(quadd[i]);
     }
 
     for (int i = 0 ; i < 3 ; i++){
         for (int j = 0 ; j < 3 ; j++) {
-            sprite_quad[i][j].setPosition(i*200, 110+j*200);
+            sprite_quad[i][j].setPosition(i*205, 115+j*200);
             sprite_quad[i][j].setScale(1.3333f, 1.3333f);
         }
     }
-    // TEST
-    sprite_quad[0][0].setTexture(*cross);
-    sprite_quad[0][2].setTexture(*nought);
-    window.draw(sprite_quad[0][0]);
-    window.draw(sprite_quad[0][2]);
+}
+
+void Game::drawPlay() {
+
+for (int i = 0 ; i<3;i++) {
+    for (int j = 0 ; j<3 ; j++) {
+        if (quad[i][j] == CROSS) {
+            sprite_quad[i][j].setTexture(*cross);
+        } else if (quad[i][j] == NOUGHT) {
+            sprite_quad[i][j].setTexture(*nought);
+        }
+        window.draw(sprite_quad[i][j]);
+    }
+}
+
 }

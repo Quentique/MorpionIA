@@ -10,7 +10,7 @@ int main() {
     settings.antialiasingLevel = 8;
 
     RenderWindow window(VideoMode(610, 715, 32), "Morpion", Style::Default, settings);
-    window.setFramerateLimit(30);
+    window.setFramerateLimit(20);
 
     Game game(window);
 
@@ -20,9 +20,10 @@ int main() {
             if (event.type == Event::Closed)
                 window.close();
         }
-
+       // cout << "HEY" << endl;
         window.clear(Color::White);
         game.drawQuad();
+        game.drawPlay();
         window.display();
     }
 }
