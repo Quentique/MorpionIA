@@ -5,14 +5,13 @@ using namespace std;
 
 Game::Game(RenderWindow& windows) : window(windows), turn(CROSS)
 {
-    for (int i = 0 ; i < 3 ; i++)
+    for (int i = 0 ; i < 3 ; i++) //Initialization of the "virtual" map of the game.
     {
         for (int j = 0 ; j < 3 ; j++)
         {
             quad[i][j] = EMPTY;
         }
     }
-
 
     if (!crossI.loadFromFile("x.bmp") || !noughtI.loadFromFile("o.bmp"))
         cout << "FATAL ERROR" << endl;
@@ -27,15 +26,15 @@ Game::Game(RenderWindow& windows) : window(windows), turn(CROSS)
     nought->loadFromImage(noughtI);
 
     cross->setSmooth(true);
-    nought->setSmooth(true);
+    nought->setSmooth(true); // Ready to be used !
 
-    quad[2][1] = CROSS;
+    quad[2][1] = CROSS; // TEST !
     quad[2][2] = NOUGHT;
 
     cout << won() << endl;
 }
 
-void Game::drawQuad() {
+void Game::drawQuad() { // Draw the grid
 
     RectangleShape quadd[5];
     for (int i = 0 ; i < 3 ; i ++) {
@@ -59,12 +58,12 @@ void Game::drawQuad() {
     for (int i = 0 ; i < 3 ; i++){
         for (int j = 0 ; j < 3 ; j++) {
             sprite_quad[i][j].setPosition(i*205, 115+j*200);
-            sprite_quad[i][j].setScale(1.3333f, 1.3333f);
+            sprite_quad[i][j].setScale(1.3333f, 1.3333f); // One case is 200px large  and the pictures are 150px large....
         }
     }
 }
 
-void Game::drawPlay() {
+void Game::drawPlay() { // Draw the grid from the virtual map by using the textures
 
     for (int i = 0 ; i<3;i++) {
         for (int j = 0 ; j<3 ; j++) {
@@ -78,18 +77,20 @@ void Game::drawPlay() {
     }
 }
 
-bool Game::won()
+bool Game::won() // Return true if someone has won
 {
+    // Check the lines
     for (int i = 0 ; i <3 ; i++) {
         if (quad[i][0]!=EMPTY) {
             if ((quad[i][0] == quad[i][1]) && (quad[i][0] == quad[i][2]))
-                                sprite_quad[i][0].setColor(Color::Red);
+                sprite_quad[i][0].setColor(Color::Red);
                 sprite_quad[i][1].setColor(Color::Red);
                 sprite_quad[i][2].setColor(Color::Red);
                 return true;
         }
     }
 
+    // Check the columns
     for (int i = 0 ; i < 3 ; i++) {
         if(quad[0][i] != EMPTY) {
              if ((quad[0][i] == quad[1][i]) && (quad[0][i] == quad[2][i]))
@@ -100,6 +101,7 @@ bool Game::won()
         }
     }
 
+    // Check the diagonals
     if (quad[1][1]!=EMPTY) {
         if ((quad[0][0]!=EMPTY) && (quad[0][0] == quad[1][1]) && (quad[0][0] == quad[2][2]))
                 sprite_quad[0][0].setColor(Color::Red);
