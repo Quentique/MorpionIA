@@ -79,6 +79,42 @@ void Game::drawPlay() { // Draw the grid from the virtual map by using the textu
         }
     }
 }
+void Game::drawText() {
+
+if (!font.loadFromFile("comic.ttf"))
+    cout << "FATAL_ERROR" << endl;
+
+    Text title;
+    title.setFont(font);
+    title.setCharacterSize(40);
+    title.setColor(Color::Red);
+    title.setStyle(Text::Bold);
+    title.setString("Morpion");
+    title.setPosition(305-title.getGlobalBounds().width/2, 10);
+
+    Text turn_ply;
+    turn_ply.setFont(font);
+    turn_ply.setCharacterSize(24);
+    turn_ply.setColor(Color::Red);
+
+    if (turn == CROSS)
+        turn_ply.setString("Au tour de Joueur 1");
+    else
+        turn_ply.setString("Au tour de Joueur 2");
+
+    turn_ply.setPosition(2, 75);
+
+    Text score;
+    score.setFont(font);
+    score.setColor(Color::Blue);
+    score.setCharacterSize(20);
+    score.setString("SCORE\nJoueur 1 : 00 \nJoueur 2 : 00");
+    score.setPosition(610-score.getGlobalBounds().width-10, 1);
+
+    window.draw(title);
+    window.draw(turn_ply);
+    window.draw(score);
+}
 
 bool Game::won() // Return true if someone has won
 {
@@ -123,6 +159,5 @@ bool Game::won() // Return true if someone has won
                 return true;
         }
     }
-
     return false;
 }

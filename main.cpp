@@ -24,6 +24,7 @@ int main() {
         window.clear(Color::White);
         game.drawQuad();
         game.drawPlay();
+        game.drawText();
         window.display();
     }
 }
