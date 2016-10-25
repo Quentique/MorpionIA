@@ -9,6 +9,9 @@ class Player
 public:
     Player(Game::Case gstate);
     Player(Game::Case gstate, std::string given_name);
+    Game::Case getCase();
+    void make_win();
+    void make_lose();
 
 private:
     std::string name;
