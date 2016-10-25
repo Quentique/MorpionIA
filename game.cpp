@@ -80,9 +80,8 @@ void Game::drawPlay() { // Draw the grid from the virtual map by using the textu
     }
 }
 void Game::drawText() {
-
-if (!font.loadFromFile("comic.ttf"))
-    cout << "FATAL_ERROR" << endl;
+    if (!font.loadFromFile("comic.ttf"))
+        cout << "FATAL_ERROR" << endl;
 
     Text title;
     title.setFont(font);
