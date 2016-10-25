@@ -1,4 +1,6 @@
 #include "game.hpp"
+#include <string>
+#include <sstream>
 
 using namespace sf;
 using namespace std;
@@ -27,6 +29,9 @@ Game::Game(RenderWindow& windows) : window(windows), turn(CROSS)
 
     cross->setSmooth(true);
     nought->setSmooth(true); // Ready to be used !
+
+    player1 = new Player(CROSS);
+    player2 = new Player(NOUGHT);
 
     quad[1][1] = CROSS; // TEST !
     quad[2][2] = CROSS;
@@ -65,7 +70,16 @@ void Game::drawQuad() { // Draw the grid
         }
     }
 }
+string Game::IntToString(int number)
+{
+  ostringstream oss;
 
+  // Works just like cout
+  oss << number;
+
+  // Return the underlying string
+  return oss.str();
+}
 void Game::drawPlay() { // Draw the grid from the virtual map by using the textures
 
     for (int i = 0 ; i<3;i++) {
@@ -97,9 +111,8 @@ void Game::drawText() {
     turn_ply.setColor(Color::Red);
 
     if (turn == CROSS)
-        turn_ply.setString("Au tour de Joueur 1");
-    else
-        turn_ply.setString("Au tour de Joueur 2");
+        turn_ply.setString("Au tour de " + player1->getName());
+    else {turn_ply.setString("Au tour de " + player2->getName()); }
 
     turn_ply.setPosition(2, 75);
 
@@ -107,7 +120,7 @@ void Game::drawText() {
     score.setFont(font);
     score.setColor(Color::Blue);
     score.setCharacterSize(20);
-    score.setString("SCORE\nJoueur 1 : 00 \nJoueur 2 : 00");
+    score.setString("SCORE\n"+ player1->getName() +" : " + IntToString(player1->getScore()) +"\n"+ player2->getName()+" : " + Game::IntToString(player2->getScore()));
     score.setPosition(610-score.getGlobalBounds().width-10, 1);
 
     window.draw(title);

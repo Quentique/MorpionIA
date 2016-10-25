@@ -2,21 +2,25 @@
 #define PLAYER_HPP_INCLUDED
 
 #include <string>
-#include "game.hpp"
+#include <iostream>
+#include "case.hpp"
 
 class Player
 {
+
 public:
-    Player(Game::Case gstate);
-    Player(Game::Case gstate, std::string given_name);
-    Game::Case getCase();
+    Player(Case gistate);
+    Player(Case gistate, std::string given_name);
+    Case getCase();
+    std::string getName();
+    int getScore();
     void make_win();
     void make_lose();
 
 private:
     std::string name;
     int score;
-    Game::Case state;
+    Case state;
 };
 
 #endif // PLAYER_HPP_INCLUDED

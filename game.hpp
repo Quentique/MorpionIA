@@ -1,13 +1,15 @@
 #ifndef GAME_HPP_INCLUDED
 #define GAME_HPP_INCLUDED
 
+#include "player.hpp"
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <string>
+
 
 class Game {
 
 public:
-    enum Case {CROSS, NOUGHT, EMPTY};
 
     Game(sf::RenderWindow& windows);
 
@@ -16,8 +18,12 @@ public:
     void drawText();
     bool won();
 
+    static std::string IntToString(int number);
+
 private:
     sf::RenderWindow& window;
+
+    Player *player1, *player2;
 
     Case quad[3][3];
     Case turn;
