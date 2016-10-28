@@ -22,9 +22,11 @@ int main() {
             {
                 window.close();
             }
-            else if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left)
+            if (!game.won()) {
+            if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left)
             {
                 game.play(event.mouseButton.x, event.mouseButton.y);
+            }
             }
         }
         window.clear(Color::White);

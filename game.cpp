@@ -140,9 +140,7 @@ bool Game::won() // Return true if someone has won
     // Check the lines
     for (int i = 0 ; i < 3 ; i++) {
         if(quad[0][i] != EMPTY) {
-                cout << "THIS ONE33";
              if (quad[0][i] == quad[1][i] && quad[2][i] == quad[0][i]) {
-                 cout << "TEST" << endl;
                 sprite_quad[0][i].setColor(Color::Red);
                 sprite_quad[1][i].setColor(Color::Red);
                 sprite_quad[2][i].setColor(Color::Red);
