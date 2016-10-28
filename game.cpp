@@ -222,10 +222,10 @@ void Game::play(int mouse_x, int mouse_y) {
             end_play = true;
             if (turn == CROSS) {
                 player1.make_win();
-                player2.make_lose();
+                player2.make_lose(player1.getPlayedStroke());
             } else {
                 player2.make_win();
-                player1.make_lose();
+                player1.make_lose(player2.getPlayedStroke());
             }
         }
         int nb_empty;

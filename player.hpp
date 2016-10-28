@@ -21,7 +21,7 @@ public:
     int getPlayedStroke();
 
     void make_win();
-    void make_lose();
+    void make_lose(int adv);
 
 
 private:

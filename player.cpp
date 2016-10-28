@@ -25,12 +25,13 @@ int Player::getScore()
 }
 void Player::make_win()
 {
-    score += 50;
+    score += 50 - (played_stroke - 3);
 }
 
-void Player::make_lose()
+void Player::make_lose(int adv)
 {
-    score -= 50;
+    score -= 20;
+    score += played_stroke - adv;
 }
 int Player::getPlayedStroke() { return played_stroke; }
 

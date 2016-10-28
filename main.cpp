@@ -58,10 +58,11 @@ int main() {
             sleep(seconds(2));
             once = true;
             window.clear();
+            }
 
             game.drawRestart();
         }
-        }
+
         window.display();
     }
 }
