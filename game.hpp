@@ -17,7 +17,8 @@ public:
     void drawPlay();
     void drawText();
     bool won();
-    void play(int gx, int gy, Case gstate);
+    void draw(int gx, int gy, Case gstate);
+    void play(int mouse_x, int mouse_y);
     void cancel(int gx, int gy);
     std::array<int, 2> getCase(int mouse_x, int mouse_y);
 

@@ -19,9 +19,14 @@ int main() {
         Event event;
         while (window.pollEvent(event)) {
             if (event.type == Event::Closed)
+            {
                 window.close();
+            }
+            else if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left)
+            {
+                game.play(event.mouseButton.x, event.mouseButton.y);
+            }
         }
-       // cout << "HEY" << endl;
         window.clear(Color::White);
         game.drawQuad();
         game.drawPlay();

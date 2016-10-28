@@ -34,7 +34,7 @@ Game::Game(RenderWindow& windows) : window(windows), turn(CROSS)
     player2 = new Player(NOUGHT);
 
     quad[0][2] = NOUGHT;
-    play(1, 1, NOUGHT);
+    draw(1, 1, NOUGHT);
     cancel(0, 2);
 
     cout << won() << endl;
@@ -167,7 +167,7 @@ bool Game::won() // Return true if someone has won
     }
     return false;
 }
-void Game::play(int gx, int gy, Case gstate) {
+void Game::draw(int gx, int gy, Case gstate) {
 
     if (quad[gx][gy] == EMPTY)
     {
@@ -190,4 +190,11 @@ else if (mouse_y > 310 && mouse_y < 510) { y = 1; }
 else if (mouse_y > 510 && mouse_y < 715) { y = 2; }
 
 return {x, y};
+}
+void Game::play(int mouse_x, int mouse_y) {
+array<int, 2> coor = getCase(mouse_x, mouse_y);
+if (coor.at(1) != -1) {
+    draw(coor.at(0), coor.at(1), turn);
+    turn = (turn==CROSS)?NOUGHT:CROSS;
+}
 }
