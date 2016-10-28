@@ -33,11 +33,9 @@ Game::Game(RenderWindow& windows) : window(windows), turn(CROSS)
     player1 = new Player(CROSS);
     player2 = new Player(NOUGHT);
 
-    quad[1][1] = CROSS; // TEST !
-    quad[2][2] = CROSS;
-    quad[0][0] = CROSS;
-    quad[1][2] = NOUGHT;
     quad[0][2] = NOUGHT;
+    play(1, 1, NOUGHT);
+    cancel(0, 2);
 
     cout << won() << endl;
 }
@@ -72,13 +70,9 @@ void Game::drawQuad() { // Draw the grid
 }
 string Game::IntToString(int number)
 {
-  ostringstream oss;
-
-  // Works just like cout
-  oss << number;
-
-  // Return the underlying string
-  return oss.str();
+    ostringstream oss;
+    oss << number;
+    return oss.str();
 }
 void Game::drawPlay() { // Draw the grid from the virtual map by using the textures
 
@@ -172,4 +166,28 @@ bool Game::won() // Return true if someone has won
         }
     }
     return false;
+}
+void Game::play(int gx, int gy, Case gstate) {
+
+    if (quad[gx][gy] == EMPTY)
+    {
+        quad[gx][gy] = gstate;
+    }
+}
+void Game::cancel(int gx, int gy) {
+    quad[gx][gy] = EMPTY;
+}
+array<int, 2> Game::getCase(int mouse_x, int mouse_y) {
+int y = -1;
+int x = -1;
+
+if (mouse_x > 0 && mouse_x < 200) {  x = 0; }
+else if (mouse_x > 200 && mouse_x < 405) { x = 1; }
+else if (mouse_x > 405 && mouse_x < 610) { x = 2; }
+
+if (mouse_y > 110 && mouse_y < 310) { y = 0; }
+else if (mouse_y > 310 && mouse_y < 510) { y = 1; }
+else if (mouse_y > 510 && mouse_y < 715) { y = 2; }
+
+return {x, y};
 }
