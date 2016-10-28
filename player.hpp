@@ -12,17 +12,13 @@ public:
     Player& operator++();
     Player operator++(int);
 
-    Player& operator--();
-    Player operator--(int);
-
     Player(Case gistate);
     Player(Case gistate, std::string given_name);
 
     Case getCase();
     std::string getName();
     int getScore();
-    int getWonStroke();
-    int getLostStroke();
+    int getPlayedStroke();
 
     void make_win();
     void make_lose();
@@ -30,7 +26,7 @@ public:
 
 private:
     std::string name;
-    int score, won_stroke, lost_stroke;
+    int score, played_stroke;
     Case state;
 };
 

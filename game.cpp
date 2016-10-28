@@ -31,9 +31,7 @@ Game::Game(RenderWindow& windows) : window(windows), turn(CROSS), player1(CROSS)
 
     cross->setSmooth(true);
     nought->setSmooth(true); // Ready to be used !
-    player2++;
-    player2--;
-    cout << player2.getWonStroke() << " e " << player2.getLostStroke() << endl;
+
     end_play = false;
     null = false;
 
@@ -112,14 +110,12 @@ void Game::drawText() {
         {
             turn_ply.setString("Partie nulle");
         } else {
-        string name_winner = (turn==NOUGHT)?player1.getName():player2.getName();
-        turn_ply.setString("Le gagnant est : " + name_winner);
+            string name_winner = (turn==NOUGHT)?player1.getName():player2.getName();
+            turn_ply.setString("Le gagnant est : " + name_winner);
         }
-
     } else {
-    if (turn == CROSS)
-        turn_ply.setString("Au tour de " + player1.getName());
-    else {turn_ply.setString("Au tour de " + player2.getName()); }
+        if (turn == CROSS) { turn_ply.setString("Au tour de " + player1.getName()); }
+        else { turn_ply.setString("Au tour de " + player2.getName()); }
     }
     turn_ply.setPosition(2, 75);
 
@@ -136,14 +132,15 @@ void Game::drawText() {
     window.draw(score);
 }
 void Game::drawRestart() {
-Text ask;
-ask.setFont(font);
-ask.setCharacterSize(30);
-ask.setColor(Color::Green);
-ask.setString("Voulez-vous recommencer une partie ?\n                       (O/N)");
+    Text ask;
 
-ask.setPosition(305-ask.getGlobalBounds().width/2, 357);
-window.draw(ask);
+    ask.setFont(font);
+    ask.setCharacterSize(30);
+    ask.setColor(Color::Green);
+    ask.setString("Voulez-vous recommencer une partie ?\n                       (O/N)");
+    ask.setPosition(305-ask.getGlobalBounds().width/2, 357);
+
+    window.draw(ask);
 }
 bool Game::won() // Return true if someone has won
 {
@@ -189,6 +186,7 @@ bool Game::won() // Return true if someone has won
 
     return false;
 }
+
 void Game::draw(int gx, int gy, Case gstate) {
 
     if (quad[gx][gy] == EMPTY)
@@ -196,6 +194,7 @@ void Game::draw(int gx, int gy, Case gstate) {
         quad[gx][gy] = gstate;
     }
 }
+
 void Game::cancel(int gx, int gy) {
     quad[gx][gy] = EMPTY;
 }
@@ -214,6 +213,7 @@ array<int, 2> Game::getCase(int mouse_x, int mouse_y) {
 
     return {x, y};
 }
+
 void Game::play(int mouse_x, int mouse_y) {
     array<int, 2> coor = getCase(mouse_x, mouse_y);
 
