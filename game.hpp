@@ -30,7 +30,7 @@ public:
 private:
     sf::RenderWindow& window;
 
-    Player *player1, *player2;
+    Player player1, player2;
 
     Case quad[3][3];
     Case turn;

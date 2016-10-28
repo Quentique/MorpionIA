@@ -54,14 +54,16 @@ int main() {
         else {
             if(!once) {
                 game.drawQuad();
-                game.drawPlay();
-                window.display();
-                sleep(seconds(2));
-                once = true;
-                window.clear();
+            game.drawPlay();
+            window.display();
+            sleep(seconds(2));
+            once = true;
+            window.clear();
             }
+
             game.drawRestart();
         }
+
         window.display();
     }
 }

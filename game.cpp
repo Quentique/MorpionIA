@@ -5,7 +5,7 @@
 using namespace sf;
 using namespace std;
 
-Game::Game(RenderWindow& windows) : window(windows), turn(CROSS)
+Game::Game(RenderWindow& windows) : window(windows), turn(CROSS), player1(CROSS), player2(NOUGHT)
 {
     for (int i = 0 ; i < 3 ; i++) //Initialization of the "virtual" map of the game.
     {
@@ -32,15 +32,8 @@ Game::Game(RenderWindow& windows) : window(windows), turn(CROSS)
     cross->setSmooth(true);
     nought->setSmooth(true); // Ready to be used !
 
-    player1 = new Player(CROSS);
-    player2 = new Player(NOUGHT);
-
     end_play = false;
     null = false;
-
-    quad[0][2] = NOUGHT;
-    draw(1, 1, NOUGHT);
-    cancel(0, 2);
 }
 
 void Game::drawQuad() { // Draw the grid
@@ -113,14 +106,12 @@ void Game::drawText() {
         {
             turn_ply.setString("Partie nulle");
         } else {
-        string name_winner = (turn==NOUGHT)?player1->getName():player2->getName();
-        turn_ply.setString("Le gagnant est : " + name_winner);
+            string name_winner = (turn==NOUGHT)?player1.getName():player2.getName();
+            turn_ply.setString("Le gagnant est : " + name_winner);
         }
-
     } else {
-    if (turn == CROSS)
-        turn_ply.setString("Au tour de " + player1->getName());
-    else {turn_ply.setString("Au tour de " + player2->getName()); }
+        if (turn == CROSS) { turn_ply.setString("Au tour de " + player1.getName()); }
+        else { turn_ply.setString("Au tour de " + player2.getName()); }
     }
     turn_ply.setPosition(2, 75);
 
@@ -129,7 +120,7 @@ void Game::drawText() {
     score.setFont(font);
     score.setColor(Color::Blue);
     score.setCharacterSize(20);
-    score.setString("SCORE\n"+ player1->getName() +" : " + IntToString(player1->getScore()) +"\n"+ player2->getName()+" : " + Game::IntToString(player2->getScore()));
+    score.setString("SCORE\n"+ player1.getName() +" : " + IntToString(player1.getScore()) +"\n"+ player2.getName()+" : " + Game::IntToString(player2.getScore()));
     score.setPosition(610-score.getGlobalBounds().width-10, 1);
 
     window.draw(title);
@@ -137,14 +128,15 @@ void Game::drawText() {
     window.draw(score);
 }
 void Game::drawRestart() {
-Text ask;
-ask.setFont(font);
-ask.setCharacterSize(30);
-ask.setColor(Color::Green);
-ask.setString("Voulez-vous recommencer une partie ?\n                       (O/N)");
+    Text ask;
 
-ask.setPosition(305-ask.getGlobalBounds().width/2, 357);
-window.draw(ask);
+    ask.setFont(font);
+    ask.setCharacterSize(30);
+    ask.setColor(Color::Green);
+    ask.setString("Voulez-vous recommencer une partie ?\n                       (O/N)");
+    ask.setPosition(305-ask.getGlobalBounds().width/2, 357);
+
+    window.draw(ask);
 }
 bool Game::won() // Return true if someone has won
 {
@@ -190,13 +182,17 @@ bool Game::won() // Return true if someone has won
 
     return false;
 }
+
 void Game::draw(int gx, int gy, Case gstate) {
 
     if (quad[gx][gy] == EMPTY)
     {
         quad[gx][gy] = gstate;
+        if (gstate == CROSS) player1++;
+        else player2++;
     }
 }
+
 void Game::cancel(int gx, int gy) {
     quad[gx][gy] = EMPTY;
 }
@@ -215,6 +211,7 @@ array<int, 2> Game::getCase(int mouse_x, int mouse_y) {
 
     return {x, y};
 }
+
 void Game::play(int mouse_x, int mouse_y) {
     array<int, 2> coor = getCase(mouse_x, mouse_y);
 
@@ -224,11 +221,11 @@ void Game::play(int mouse_x, int mouse_y) {
         {
             end_play = true;
             if (turn == CROSS) {
-                player1->make_win();
-                player2->make_lose();
+                player1.make_win();
+                player2.make_lose(player1.getPlayedStroke());
             } else {
-                player2->make_win();
-                player1->make_lose();
+                player2.make_win();
+                player1.make_lose(player2.getPlayedStroke());
             }
         }
         int nb_empty;
