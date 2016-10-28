@@ -45,23 +45,23 @@ int main() {
         }
         window.clear(Color::White);
         game.drawText();
+
         if (!game.play_finished()) {
-        game.drawQuad();
-        game.drawPlay();
+            game.drawQuad();
+            game.drawPlay();
         }
         else {
-                if(!once) {
-                    game.drawQuad();
-        game.drawPlay();
-        window.display();
-        sleep(seconds(2));
-        once = true;
-        window.clear();
-                }
+            if(!once) {
+                game.drawQuad();
+            game.drawPlay();
+            window.display();
+            sleep(seconds(2));
+            once = true;
+            window.clear();
 
             game.drawRestart();
         }
+        }
         window.display();
-
     }
 }
