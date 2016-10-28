@@ -11,7 +11,7 @@ class Game {
 
 public:
 
-    Game(sf::RenderWindow& windows);
+    Game(sf::RenderWindow& windows, int n_ply);
 
     void drawQuad();
     void drawPlay();
@@ -19,7 +19,7 @@ public:
     void drawRestart();
     bool won();
     bool play_finished();
-    void draw(int gx, int gy, Case gstate);
+    bool draw(int gx, int gy, Case gstate);
     void play(int mouse_x, int mouse_y);
     void cancel(int gx, int gy);
     std::array<int, 2> getCase(int mouse_x, int mouse_y);

@@ -13,7 +13,7 @@ int main() {
     RenderWindow window(VideoMode(610, 715, 32), "Morpion", Style::Default, settings);
     window.setFramerateLimit(20);
 
-    Game game(window);
+    Game game(window, 2);
     bool once = false;
 
     while (window.isOpen()) {

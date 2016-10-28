@@ -5,7 +5,7 @@
 using namespace sf;
 using namespace std;
 
-Game::Game(RenderWindow& windows) : window(windows), turn(CROSS), player1(CROSS), player2(NOUGHT)
+Game::Game(RenderWindow& windows, int n_ply) : window(windows), turn(CROSS), player1(CROSS), player2(NOUGHT)
 {
     for (int i = 0 ; i < 3 ; i++) //Initialization of the "virtual" map of the game.
     {
@@ -183,14 +183,15 @@ bool Game::won() // Return true if someone has won
     return false;
 }
 
-void Game::draw(int gx, int gy, Case gstate) {
+bool Game::draw(int gx, int gy, Case gstate) {
 
     if (quad[gx][gy] == EMPTY)
     {
         quad[gx][gy] = gstate;
         if (gstate == CROSS) player1++;
         else player2++;
-    }
+        return true;
+    } else { return false;}
 }
 
 void Game::cancel(int gx, int gy) {
@@ -215,8 +216,7 @@ array<int, 2> Game::getCase(int mouse_x, int mouse_y) {
 void Game::play(int mouse_x, int mouse_y) {
     array<int, 2> coor = getCase(mouse_x, mouse_y);
 
-    if (coor.at(1) != -1) {
-        draw(coor.at(0), coor.at(1), turn);
+    if (coor.at(1) != -1 && draw(coor.at(0), coor.at(1), turn)) {
         if (won())
         {
             end_play = true;
