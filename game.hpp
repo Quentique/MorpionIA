@@ -37,8 +37,8 @@ private:
 
     sf::Font font;
 
-    sf::Image crossI, noughtI, win_crossI, win_noughtI;
-    sf::Texture *cross, *nought, *win_cross, *win_nought;
+    sf::Image crossI, noughtI;
+    sf::Texture *cross, *nought, *empty_text;
     sf::Sprite sprite_quad[3][3];
 
     bool end_play, null;

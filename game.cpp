@@ -23,6 +23,8 @@ Game::Game(RenderWindow& windows) : window(windows), turn(CROSS)
 
     cross = new Texture();
     nought = new Texture();
+    empty_text = new Texture();
+    empty_text->create(150, 150);
 
     cross->loadFromImage(crossI);
     nought->loadFromImage(noughtI);
@@ -242,5 +244,16 @@ void Game::play(int mouse_x, int mouse_y) {
         }
         turn = (turn==CROSS)?NOUGHT:CROSS;
     }
+}
+void Game::reset() {
+    for (int i = 0 ; i < 3 ; i++) {
+        for (int j = 0 ; j < 3 ; j++) {
+            quad[i][j] = EMPTY;
+            sprite_quad[i][j] = Sprite();
+        }
+    }
+    end_play = false;
+    null = false;
+    turn = (turn==CROSS)?NOUGHT:CROSS;
 }
 bool Game::play_finished() { return end_play; }

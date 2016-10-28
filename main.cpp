@@ -14,6 +14,7 @@ int main() {
     window.setFramerateLimit(20);
 
     Game game(window);
+    bool once = false;
 
     while (window.isOpen()) {
         Event event;
@@ -29,13 +30,15 @@ int main() {
             }
             }
             else {
+
                 if (event.type == Event::KeyPressed)
                 {
                     if (event.key.code == Keyboard::N)
                     {
                         window.close();
                     } else if (event.key.code == Keyboard::O) {
-                        //game.reset();
+                        game.reset();
+                        once = false;
                     }
                 }
             }
@@ -47,8 +50,18 @@ int main() {
         game.drawPlay();
         }
         else {
+                if(!once) {
+                    game.drawQuad();
+        game.drawPlay();
+        window.display();
+        sleep(seconds(2));
+        once = true;
+        window.clear();
+                }
+
             game.drawRestart();
         }
         window.display();
+
     }
 }
