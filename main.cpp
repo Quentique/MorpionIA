@@ -28,6 +28,17 @@ int main() {
                 game.play(event.mouseButton.x, event.mouseButton.y);
             }
             }
+            else {
+                if (event.type == Event::KeyPressed)
+                {
+                    if (event.key.code == Keyboard::N)
+                    {
+                        window.close();
+                    } else if (event.key.code == Keyboard::O) {
+                        //game.reset();
+                    }
+                }
+            }
         }
         window.clear(Color::White);
         game.drawText();
