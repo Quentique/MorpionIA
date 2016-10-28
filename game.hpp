@@ -39,7 +39,7 @@ private:
     sf::Texture *cross, *nought, *win_cross, *win_nought;
     sf::Sprite sprite_quad[3][3];
 
-    bool end_play;
+    bool end_play, null;
 };
 
 #endif // GAME_HPP_INCLUDED

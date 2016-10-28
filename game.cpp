@@ -34,6 +34,7 @@ Game::Game(RenderWindow& windows) : window(windows), turn(CROSS)
     player2 = new Player(NOUGHT);
 
     end_play = false;
+    null = false;
 
     quad[0][2] = NOUGHT;
     draw(1, 1, NOUGHT);
@@ -106,8 +107,14 @@ void Game::drawText() {
 
     if (end_play)
     {
+        if (null)
+        {
+            turn_ply.setString("Partie nulle");
+        } else {
         string name_winner = (turn==NOUGHT)?player1->getName():player2->getName();
         turn_ply.setString("Le gagnant est : " + name_winner);
+        }
+
     } else {
     if (turn == CROSS)
         turn_ply.setString("Au tour de " + player1->getName());
@@ -210,6 +217,17 @@ if (coor.at(1) != -1) {
             player2->make_win();
             player1->make_lose();
         }
+    }
+    int nb_empty;
+    for (int i = 0 ; i < 3 ; i++) {
+        for (int j = 0 ; j < 3 ; j++) {
+            if (quad[i][j] == EMPTY)
+                nb_empty++;
+        }
+    }
+    if (nb_empty == 0 && !end_play) {
+        end_play = true;
+        null = true;
     }
     turn = (turn==CROSS)?NOUGHT:CROSS;
 }
