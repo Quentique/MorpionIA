@@ -33,11 +33,11 @@ Game::Game(RenderWindow& windows) : window(windows), turn(CROSS)
     player1 = new Player(CROSS);
     player2 = new Player(NOUGHT);
 
+    end_play = false;
+
     quad[0][2] = NOUGHT;
     draw(1, 1, NOUGHT);
     cancel(0, 2);
-
-    cout << won() << endl;
 }
 
 void Game::drawQuad() { // Draw the grid
@@ -104,11 +104,17 @@ void Game::drawText() {
     turn_ply.setCharacterSize(24);
     turn_ply.setColor(Color::Red);
 
+    if (end_play)
+    {
+        string name_winner = (turn==NOUGHT)?player1->getName():player2->getName();
+        turn_ply.setString("Le gagnant est : " + name_winner);
+    } else {
     if (turn == CROSS)
         turn_ply.setString("Au tour de " + player1->getName());
     else {turn_ply.setString("Au tour de " + player2->getName()); }
-
+    }
     turn_ply.setPosition(2, 75);
+
 
     Text score;
     score.setFont(font);
@@ -163,6 +169,7 @@ bool Game::won() // Return true if someone has won
                 return true;
         }
     }
+
     return false;
 }
 void Game::draw(int gx, int gy, Case gstate) {
@@ -193,6 +200,18 @@ void Game::play(int mouse_x, int mouse_y) {
 array<int, 2> coor = getCase(mouse_x, mouse_y);
 if (coor.at(1) != -1) {
     draw(coor.at(0), coor.at(1), turn);
+    if (won())
+    {
+        end_play = true;
+        if (turn == CROSS) {
+            player1->make_win();
+            player2->make_lose();
+        } else {
+            player2->make_win();
+            player1->make_lose();
+        }
+    }
     turn = (turn==CROSS)?NOUGHT:CROSS;
 }
 }
+bool Game::play_finished() { return end_play; }

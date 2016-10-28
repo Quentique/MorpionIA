@@ -22,7 +22,7 @@ int main() {
             {
                 window.close();
             }
-            if (!game.won()) {
+            if (!game.play_finished()) {
             if (event.type == Event::MouseButtonPressed && event.mouseButton.button == Mouse::Left)
             {
                 game.play(event.mouseButton.x, event.mouseButton.y);

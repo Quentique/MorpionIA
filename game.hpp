@@ -17,6 +17,7 @@ public:
     void drawPlay();
     void drawText();
     bool won();
+    bool play_finished();
     void draw(int gx, int gy, Case gstate);
     void play(int mouse_x, int mouse_y);
     void cancel(int gx, int gy);
@@ -37,6 +38,8 @@ private:
     sf::Image crossI, noughtI, win_crossI, win_noughtI;
     sf::Texture *cross, *nought, *win_cross, *win_nought;
     sf::Sprite sprite_quad[3][3];
+
+    bool end_play;
 };
 
 #endif // GAME_HPP_INCLUDED
