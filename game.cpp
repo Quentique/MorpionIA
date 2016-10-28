@@ -34,10 +34,6 @@ Game::Game(RenderWindow& windows) : window(windows), turn(CROSS), player1(CROSS)
 
     end_play = false;
     null = false;
-
-    quad[0][2] = NOUGHT;
-    draw(1, 1, NOUGHT);
-    cancel(0, 2);
 }
 
 void Game::drawQuad() { // Draw the grid
@@ -192,6 +188,8 @@ void Game::draw(int gx, int gy, Case gstate) {
     if (quad[gx][gy] == EMPTY)
     {
         quad[gx][gy] = gstate;
+        if (gstate == CROSS) player1++;
+        else player2++;
     }
 }
 
