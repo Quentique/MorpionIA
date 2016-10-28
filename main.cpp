@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "game.hpp"
+#include "startmenu.hpp"
 
 
 using namespace std;
@@ -12,7 +13,9 @@ int main() {
 
     RenderWindow window(VideoMode(610, 715, 32), "Morpion", Style::Default, settings);
     window.setFramerateLimit(20);
-
+    StartMenu menu(window);
+    menu.run();
+    window.create(VideoMode(610, 715, 32), "Morpion", Style::Default, settings);
     Game game(window, 2);
     bool once = false;
 

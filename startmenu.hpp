@@ -15,7 +15,8 @@ public:
 private:
     bool quit;
     sf::Font font;
-
+    sf::RenderWindow& window;
+    sf::Text one_player, two_player;
 };
 
 #endif // STARTMENU_HPP_INCLUDED
