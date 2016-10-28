@@ -30,9 +30,14 @@ int main() {
             }
         }
         window.clear(Color::White);
+        game.drawText();
+        if (!game.play_finished()) {
         game.drawQuad();
         game.drawPlay();
-        game.drawText();
+        }
+        else {
+            game.drawRestart();
+        }
         window.display();
     }
 }

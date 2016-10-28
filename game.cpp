@@ -134,7 +134,16 @@ void Game::drawText() {
     window.draw(turn_ply);
     window.draw(score);
 }
+void Game::drawRestart() {
+Text ask;
+ask.setFont(font);
+ask.setCharacterSize(30);
+ask.setColor(Color::Green);
+ask.setString("Voulez-vous recommencer une partie ?\n                       (O/N)");
 
+ask.setPosition(305-ask.getGlobalBounds().width/2, 357);
+window.draw(ask);
+}
 bool Game::won() // Return true if someone has won
 {
     // Check the columns
@@ -189,47 +198,49 @@ void Game::draw(int gx, int gy, Case gstate) {
 void Game::cancel(int gx, int gy) {
     quad[gx][gy] = EMPTY;
 }
+
 array<int, 2> Game::getCase(int mouse_x, int mouse_y) {
-int y = -1;
-int x = -1;
+    int y = -1;
+    int x = -1;
 
-if (mouse_x > 0 && mouse_x < 200) {  x = 0; }
-else if (mouse_x > 200 && mouse_x < 405) { x = 1; }
-else if (mouse_x > 405 && mouse_x < 610) { x = 2; }
+    if (mouse_x > 0 && mouse_x < 200) {  x = 0; }
+    else if (mouse_x > 200 && mouse_x < 405) { x = 1; }
+    else if (mouse_x > 405 && mouse_x < 610) { x = 2; }
 
-if (mouse_y > 110 && mouse_y < 310) { y = 0; }
-else if (mouse_y > 310 && mouse_y < 510) { y = 1; }
-else if (mouse_y > 510 && mouse_y < 715) { y = 2; }
+    if (mouse_y > 110 && mouse_y < 310) { y = 0; }
+    else if (mouse_y > 310 && mouse_y < 510) { y = 1; }
+    else if (mouse_y > 510 && mouse_y < 715) { y = 2; }
 
-return {x, y};
+    return {x, y};
 }
 void Game::play(int mouse_x, int mouse_y) {
-array<int, 2> coor = getCase(mouse_x, mouse_y);
-if (coor.at(1) != -1) {
-    draw(coor.at(0), coor.at(1), turn);
-    if (won())
-    {
-        end_play = true;
-        if (turn == CROSS) {
-            player1->make_win();
-            player2->make_lose();
-        } else {
-            player2->make_win();
-            player1->make_lose();
+    array<int, 2> coor = getCase(mouse_x, mouse_y);
+
+    if (coor.at(1) != -1) {
+        draw(coor.at(0), coor.at(1), turn);
+        if (won())
+        {
+            end_play = true;
+            if (turn == CROSS) {
+                player1->make_win();
+                player2->make_lose();
+            } else {
+                player2->make_win();
+                player1->make_lose();
+            }
         }
-    }
-    int nb_empty;
-    for (int i = 0 ; i < 3 ; i++) {
-        for (int j = 0 ; j < 3 ; j++) {
-            if (quad[i][j] == EMPTY)
-                nb_empty++;
+        int nb_empty;
+        for (int i = 0 ; i < 3 ; i++) {
+            for (int j = 0 ; j < 3 ; j++) {
+                if (quad[i][j] == EMPTY)
+                    nb_empty++;
+            }
         }
+        if (nb_empty == 0 && !end_play) {
+            end_play = true;
+            null = true;
+        }
+        turn = (turn==CROSS)?NOUGHT:CROSS;
     }
-    if (nb_empty == 0 && !end_play) {
-        end_play = true;
-        null = true;
-    }
-    turn = (turn==CROSS)?NOUGHT:CROSS;
-}
 }
 bool Game::play_finished() { return end_play; }
