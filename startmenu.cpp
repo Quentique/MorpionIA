@@ -45,6 +45,8 @@ void StartMenu::run() {
         {
             if (event.type == Event::Closed) {
                 window.close();
+                quit = true;
+                number_players = -1;
             }
             if (event.type == Event::MouseMoved) {
                 if (event.mouseMove.x > one_player.getGlobalBounds().left && event.mouseMove.x < (one_player.getGlobalBounds().left + one_player.getGlobalBounds().width) && event.mouseMove.y > one_player.getGlobalBounds().top && event.mouseMove.y < (one_player.getGlobalBounds().top + one_player.getGlobalBounds().height))
@@ -82,6 +84,7 @@ void StartMenu::run() {
         }
     }
 
+    if (number_players != -1)
     quit = false;
 
     RectangleShape input1, input2, input3;
@@ -145,36 +148,41 @@ void StartMenu::run() {
             {
                 window.close();
                 quit = true;
+                number_players = -1;
 
                 } else if (event.type == Event::MouseButtonPressed && event.mouseButton.x > input3.getGlobalBounds().left && event.mouseButton.x < input3.getGlobalBounds().left + input3.getGlobalBounds().width && event.mouseButton.y < input3.getGlobalBounds().top + input3.getGlobalBounds().height && event.mouseButton.y > input3.getGlobalBounds().top) {
-                    cout << "hello" << endl;
+
                     quit = true;
                     name_player1 = p[2].getString();
                     name_player2 = p[3].getString();
-                    if (name_player1.length() == 0 || (name_player1.length() == 1 && name_player1[name_player1.length()-1] == '_'))
-                    {
+
+                    if (name_player1.length() == 0 || (name_player1.length() == 1 && name_player1[name_player1.length()-1] == '_')){
                         name_player1 = "Joueur 1";
-                    } else if(name_player1[name_player1.length()-1] == '_')
-                    {
+                    } else if(name_player1[name_player1.length()-1] == '_'){
                         name_player1.resize(name_player1.length()-1);
                     }
-                    if (name_player2.length() == 0 || (name_player2.length() == 1 && name_player2[name_player2.length()-1] == '_'))
-                    {
+
+                    if (name_player2.length() == 0 || (name_player2.length() == 1 && name_player2[name_player2.length()-1] == '_')) {
                         name_player2 = "Joueur 2";
-                    } else if (name_player2[name_player2.length()-1] == '_')
-                    {
+                    } else if (name_player2[name_player2.length()-1] == '_') {
                         name_player2.resize(name_player2.length()-1);
                     }
+
             } else if (event.type == Event::MouseButtonPressed && number_players == 2) {
+
                 if (event.mouseButton.x > input1.getGlobalBounds().left && event.mouseButton.x < input1.getGlobalBounds().left + input1.getGlobalBounds().width && event.mouseButton.y < input1.getGlobalBounds().top + input1.getGlobalBounds().height && event.mouseButton.y > input1.getGlobalBounds().top) {
                     select = 1;
+
                     p[2].setColor(Color::Magenta);
                     p[3].setColor(Color::Blue);
+
                     string st = p[3].getString();
+
                     if (st[st.length()-1] == '_')
                     {
                         p[3].setString(st.substr(0, st.length()-1));
                     }
+
                 } else if (event.mouseButton.x > input2.getGlobalBounds().left && event.mouseButton.x < input2.getGlobalBounds().left + input2.getGlobalBounds().width && event.mouseButton.y < input2.getGlobalBounds().top + input2.getGlobalBounds().height && event.mouseButton.y > input2.getGlobalBounds().top) {
                     select = 2;
                     p[2].setColor(Color::Blue);
@@ -188,40 +196,39 @@ void StartMenu::run() {
 
             } else if (event.type == Event::KeyPressed && event.key.code == Keyboard::BackSpace) {
                 string fr = p[select+1].getString();
+
                 if (fr.length() > 0) {
-                if (fr[fr.length()-1] == '_')
-                {
-                    if (fr.length() == 1)
+                    if (fr[fr.length()-1] == '_')
                     {
-                        fr = "";
+                        if (fr.length() == 1)
+                        {
+                            fr = "";
+                        } else {
+                            fr.resize(fr.length()-2);
+                        }
                     } else {
-                    fr.resize(fr.length()-2);
-                    cout << fr << endl;
+                        fr.resize(fr.length()-1);
                     }
-                } else {
-                    fr.resize(fr.length()-1);
-                    cout << fr << endl;
+                    p[select+1].setString(fr);
                 }
-                p[select+1].setString(fr);
-                }
-            } else if (event.type == Event::TextEntered && event.text.unicode != 8 && event.text.unicode != 13)
-            {
-                cout << event.text.unicode << endl;
+
+            } else if (event.type == Event::TextEntered && event.text.unicode != 8 && event.text.unicode != 13) {
                 string fr = p[select+1].getString();
-                if (fr[fr.length()-1] == '_')
-                {
+
+                if (fr[fr.length()-1] == '_') {
                     fr[fr.length()-1] = static_cast<char>(event.text.unicode);
                 } else {
                     fr += static_cast<char>(event.text.unicode);
                 }
                 p[select+1].setString(fr);
 
-
             } else if (event.type == Event::MouseMoved) {
-                if(event.mouseMove.x > input3.getGlobalBounds().left && event.mouseMove.x < (input3.getGlobalBounds().left + input3.getGlobalBounds().width) && event.mouseMove.y > input3.getGlobalBounds().top && event.mouseMove.y < (input3.getGlobalBounds().top + input3.getGlobalBounds().height))
-                {
+
+                if(event.mouseMove.x > input3.getGlobalBounds().left && event.mouseMove.x < (input3.getGlobalBounds().left + input3.getGlobalBounds().width) && event.mouseMove.y > input3.getGlobalBounds().top && event.mouseMove.y < (input3.getGlobalBounds().top + input3.getGlobalBounds().height)) {
                     input3.setFillColor(Color(0, 242, 0));
-                } else { input3.setFillColor(Color::Green); }
+                } else {
+                    input3.setFillColor(Color::Green);
+                }
             }
         }
 

@@ -13,9 +13,14 @@ int main() {
 
     RenderWindow window(VideoMode(610, 715, 32), "Morpion", Style::Default, settings);
     window.setFramerateLimit(20);
+
     StartMenu menu(window);
     menu.run();
+
+    if (menu.number_players != -1)
     window.create(VideoMode(610, 715, 32), "Morpion", Style::Default, settings);
+
+
     Game game(window, menu.number_players, menu.name_player1, menu.name_player2);
     bool once = false;
 
