@@ -11,7 +11,7 @@ class Game {
 
 public:
 
-    Game(sf::RenderWindow& windows, int n_ply);
+    Game(sf::RenderWindow& windows, int n_ply, std::string name_ply1, std::string name_ply2);
 
     void drawQuad();
     void drawPlay();

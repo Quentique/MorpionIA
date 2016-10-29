@@ -16,7 +16,7 @@ int main() {
     StartMenu menu(window);
     menu.run();
     window.create(VideoMode(610, 715, 32), "Morpion", Style::Default, settings);
-    Game game(window, 2);
+    Game game(window, menu.number_players, menu.name_player1, menu.name_player2);
     bool once = false;
 
     while (window.isOpen()) {

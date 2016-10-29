@@ -5,7 +5,7 @@
 using namespace sf;
 using namespace std;
 
-Game::Game(RenderWindow& windows, int n_ply) : window(windows), turn(CROSS), player1(CROSS), player2(NOUGHT)
+Game::Game(RenderWindow& windows, int n_ply, string name_ply1, string name_ply2) : window(windows), turn(CROSS), player1(CROSS, name_ply1), player2(NOUGHT, name_ply2)
 {
     for (int i = 0 ; i < 3 ; i++) //Initialization of the "virtual" map of the game.
     {

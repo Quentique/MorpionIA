@@ -1,6 +1,7 @@
 #include "startmenu.hpp"
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <string>
 
 using namespace sf;
 using namespace std;
@@ -83,5 +84,160 @@ void StartMenu::run() {
 
     quit = false;
 
+    RectangleShape input1, input2, input3;
+    Text p[5];
+    int select = 1;
+
+    for (int i = 0 ; i < 5 ; i++)
+    {
+        p[i].setCharacterSize(24);
+        p[i].setFont(font);
+    }
+    p[0].setString("Joueur 1 :");
+    p[1].setString("Joueur 2 :");
+    p[0].setColor(Color::Blue);
+    p[1].setColor(Color::Blue);
+    p[0].setPosition(20, 100);
+    p[1].setPosition(20, 150);
+    input1.setOutlineColor(Color::Black);
+    input2.setOutlineColor(Color::Black);
+    input1.setOutlineThickness(2);
+    input2.setOutlineThickness(2);
+    p[2].setString("Joueur 1_");
+    p[3].setString((number_players==1)?"IA":"Joueur 2");
+    p[2].setColor(Color::Magenta);
+    p[3].setColor(Color::Blue);
+    input1.setSize(Vector2f(150, p[2].getGlobalBounds().height+7));
+    input2.setSize(Vector2f(150, p[2].getGlobalBounds().height+7));
+    input1.setPosition(p[1].getGlobalBounds().width + p[1].getPosition().x + 10, p[0].getGlobalBounds().top - 2);
+    input2.setPosition(p[1].getGlobalBounds().width + p[1].getPosition().x + 10, p[1].getGlobalBounds().top - 2);
+    input1.setFillColor(Color::Transparent);
+    input2.setFillColor(Color::Transparent);
+    p[2].setPosition(148, 100);
+    p[3].setPosition(148, 152);
+    p[4].setString("Valider");
+    p[4].setColor(Color::Blue);
+    input3.setFillColor(Color::Green);
+    input3.setSize(Vector2f(150, 50));
+    input3.setPosition(400, 112);
+    p[4].setPosition(400-p[4].getGlobalBounds().width/2+input3.getGlobalBounds().width/2, 110+input3.getGlobalBounds().height/2-p[4].getGlobalBounds().height/2);
+
+
+    Clock clock;
+    while(!quit) {
+
+        window.clear(Color::White);
+        window.draw(title);
+        window.draw(p[0]);
+        window.draw(p[1]);
+        window.draw(p[2]);
+        window.draw(p[3]);
+        window.draw(input1);
+        window.draw(input2);
+        window.draw(input3);
+        window.draw(p[4]);
+        window.display();
+
+        Event event;
+        while(window.pollEvent(event))
+        {
+            if (event.type == Event::Closed)
+            {
+                window.close();
+                quit = true;
+
+                } else if (event.type == Event::MouseButtonPressed && event.mouseButton.x > input3.getGlobalBounds().left && event.mouseButton.x < input3.getGlobalBounds().left + input3.getGlobalBounds().width && event.mouseButton.y < input3.getGlobalBounds().top + input3.getGlobalBounds().height && event.mouseButton.y > input3.getGlobalBounds().top) {
+                    cout << "hello" << endl;
+                    quit = true;
+                    name_player1 = p[2].getString();
+                    name_player2 = p[3].getString();
+                    if (name_player1.length() == 0 || (name_player1.length() == 1 && name_player1[name_player1.length()-1] == '_'))
+                    {
+                        name_player1 = "Joueur 1";
+                    } else if(name_player1[name_player1.length()-1] == '_')
+                    {
+                        name_player1.resize(name_player1.length()-1);
+                    }
+                    if (name_player2.length() == 0 || (name_player2.length() == 1 && name_player2[name_player2.length()-1] == '_'))
+                    {
+                        name_player2 = "Joueur 2";
+                    } else if (name_player2[name_player2.length()-1] == '_')
+                    {
+                        name_player2.resize(name_player2.length()-1);
+                    }
+            } else if (event.type == Event::MouseButtonPressed && number_players == 2) {
+                if (event.mouseButton.x > input1.getGlobalBounds().left && event.mouseButton.x < input1.getGlobalBounds().left + input1.getGlobalBounds().width && event.mouseButton.y < input1.getGlobalBounds().top + input1.getGlobalBounds().height && event.mouseButton.y > input1.getGlobalBounds().top) {
+                    select = 1;
+                    p[2].setColor(Color::Magenta);
+                    p[3].setColor(Color::Blue);
+                    string st = p[3].getString();
+                    if (st[st.length()-1] == '_')
+                    {
+                        p[3].setString(st.substr(0, st.length()-1));
+                    }
+                } else if (event.mouseButton.x > input2.getGlobalBounds().left && event.mouseButton.x < input2.getGlobalBounds().left + input2.getGlobalBounds().width && event.mouseButton.y < input2.getGlobalBounds().top + input2.getGlobalBounds().height && event.mouseButton.y > input2.getGlobalBounds().top) {
+                    select = 2;
+                    p[2].setColor(Color::Blue);
+                    p[3].setColor(Color::Magenta);
+                    string st = p[2].getString();
+                    if (st[st.length()-1] == '_')
+                    {
+                        p[2].setString(st.substr(0, st.length()-1));
+                    }
+                }
+
+            } else if (event.type == Event::KeyPressed && event.key.code == Keyboard::BackSpace) {
+                string fr = p[select+1].getString();
+                if (fr.length() > 0) {
+                if (fr[fr.length()-1] == '_')
+                {
+                    if (fr.length() == 1)
+                    {
+                        fr = "";
+                    } else {
+                    fr.resize(fr.length()-2);
+                    cout << fr << endl;
+                    }
+                } else {
+                    fr.resize(fr.length()-1);
+                    cout << fr << endl;
+                }
+                p[select+1].setString(fr);
+                }
+            } else if (event.type == Event::TextEntered && event.text.unicode != 8 && event.text.unicode != 13)
+            {
+                cout << event.text.unicode << endl;
+                string fr = p[select+1].getString();
+                if (fr[fr.length()-1] == '_')
+                {
+                    fr[fr.length()-1] = static_cast<char>(event.text.unicode);
+                } else {
+                    fr += static_cast<char>(event.text.unicode);
+                }
+                p[select+1].setString(fr);
+
+
+            } else if (event.type == Event::MouseMoved) {
+                if(event.mouseMove.x > input3.getGlobalBounds().left && event.mouseMove.x < (input3.getGlobalBounds().left + input3.getGlobalBounds().width) && event.mouseMove.y > input3.getGlobalBounds().top && event.mouseMove.y < (input3.getGlobalBounds().top + input3.getGlobalBounds().height))
+                {
+                    input3.setFillColor(Color(0, 242, 0));
+                } else { input3.setFillColor(Color::Green); }
+            }
+        }
+
+        if (clock.getElapsedTime() > seconds(0.5))
+        {
+            string st = p[select+1].getString();
+            if (st[st.length()-1] == '_')
+            {
+                p[select+1].setString(st.substr(0, st.length()-1));
+                clock.restart();
+            } else {
+                p[select+1].setString(st + "_");
+                clock.restart();
+            }
+        }
+
+    }
 
 }
